@@ -45,7 +45,7 @@ export default function UnitsPanel(props){
 
         return(
         <div id="ArmyPanel" className="panel">
-            {army.length > 0 ? filledPanel : emptyPanel}
+            <div className="craftedModels">{army.length > 0 ? filledPanel : emptyPanel}</div>
             <span className="ArmyFooter">
                 <div className="totalArmyPoints">{`Total: ${sumPoints()}`}</div>
                 <div className="impExp">
