@@ -9,6 +9,7 @@ import { mediumslateblue } from 'color-name';
 export default function KitPanel(props){
 
     const {currentSelection, weapons, onSubmit, addToArmy} = props;
+    const [listCount, setCount] = useState(0);
     const [shootingWeapons, setShooting] = useState([]);
     const [meleeWeapons, setMelee] = useState([]);
     const [totalPoints, setTotalPoints] = useState(0);
@@ -37,8 +38,8 @@ export default function KitPanel(props){
 
     function submit(){
 
-        const toAdd = {name: currentSelection.name, points: totalPoints, weapons:{shooting: shootingWeapons, melee:meleeWeapons}, quantity:quantity }
-
+        const toAdd = {name: currentSelection.name, points: totalPoints, weapons:{shooting: shootingWeapons, melee:meleeWeapons}, quantity:quantity, id:listCount}
+        setCount(listCount+1);
         quantity > 0 && onSubmit(toAdd);
     }
     

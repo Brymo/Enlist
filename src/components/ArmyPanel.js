@@ -40,7 +40,7 @@ export default function UnitsPanel(props){
 
     const emptyPanel = <div className="emptyPanel">{`<< Customise a model to add to your army`}</div>        
     const filledPanel = army.map((unit)=>{
-                            return <DeletionDisplay object={unit} deleteItem={()=>{deleteItem(unit)}} equips={unit.weapons} quantity={unit.quantity}/>
+                            return <DeletionDisplay object={unit} deleteItem={()=>{deleteItem(unit)}} equips={unit.weapons} quantity={unit.quantity} key={unit.id}/>
                         })
 
         return(
