@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Enlist/static/css/main.62d13cd5.chunk.css",
+    "main.js": "/Enlist/static/js/main.f6cbf179.chunk.js",
+    "main.js.map": "/Enlist/static/js/main.f6cbf179.chunk.js.map",
+    "runtime-main.js": "/Enlist/static/js/runtime-main.f629342d.js",
+    "runtime-main.js.map": "/Enlist/static/js/runtime-main.f629342d.js.map",
+    "static/js/2.56d3959c.chunk.js": "/Enlist/static/js/2.56d3959c.chunk.js",
+    "static/js/2.56d3959c.chunk.js.map": "/Enlist/static/js/2.56d3959c.chunk.js.map",
+    "index.html": "/Enlist/index.html",
+    "precache-manifest.d404918a8a42748c6ecf0cc4c9b68e07.js": "/Enlist/precache-manifest.d404918a8a42748c6ecf0cc4c9b68e07.js",
+    "service-worker.js": "/Enlist/service-worker.js",
+    "static/css/main.62d13cd5.chunk.css.map": "/Enlist/static/css/main.62d13cd5.chunk.css.map",
+    "static/js/2.56d3959c.chunk.js.LICENSE.txt": "/Enlist/static/js/2.56d3959c.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/Enlist/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f629342d.js",
+    "static/js/2.56d3959c.chunk.js",
+    "static/css/main.62d13cd5.chunk.css",
+    "static/js/main.f6cbf179.chunk.js"
+  ]
+}
