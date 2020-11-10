@@ -1,0 +1,12 @@
+.showOnHover{
+    opacity: 0;
+}
+
+.strip:hover .showOnHover{
+    opacity: 1;
+}
+
+.unitCard:hover .showOnHover{
+    opacity: 1;
+}
+
