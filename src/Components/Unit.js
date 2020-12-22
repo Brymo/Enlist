@@ -47,24 +47,19 @@ export default function Unit(props){
     const [currentEquip,setCurrent] = useState({name:"", points:0});
     //const [unitData, setData] = useState({qty:0, name:data[currentFaction]["UNITS"][0].name, weapons:[]});
 
-    const units = useMemo(()=>factionData["UNITS"].concat(factionData["NAMED CHARS"]),[factionData])
+    const units = useMemo(()=>factionData["UNITS"].concat(factionData["NAMED CHARS"] || []),[factionData])
     const equipment = useMemo(()=>factionData["RANGED WEAPONS"].concat(factionData["MELEE WEAPONS"]).concat(factionData["OTHER WARGEAR"]),[factionData])
-
-    const [oldTotal,setOldTotal] = useState(units[0].points);
 
     const weaponPoints =  unitData.weapons.reduce((acc,weapon)=>{
         return acc + parseInt(weapon.points)*weapon.qty;
     },0);
-    const total = (weaponPoints + unitData.model.points)*unitData.qty;
 
     function updateUnit(newUnit){
         dispatch({type:"update",old:unitData,new:newUnit})
         setData(newUnit);
     }
 
-    useEffect(()=>{
-        initialData && updateUnit(initialData);
-    },[]);
+    const total = (weaponPoints + unitData.model.points)*unitData.qty;
 
     useEffect(()=>{
         const clone = {...unitData};
@@ -74,10 +69,18 @@ export default function Unit(props){
 
 
     useEffect(()=>{
-        const firstModelPoints = parseInt(units[0].points);
-        updateUnit({qty:1, model:{name:units[0].name,points:firstModelPoints}, weapons:[],total:firstModelPoints});    
-        setCurrent({name:equipment[0].name,points:equipment[0].points});    
+        if(initialData){
+            updateUnit(initialData)
+            const startingWeapon = initialData.weapons[0] ? initialData.weapons[0].name : equipment[0].name;
+            const startingWeaponPoints = initialData.weapons[0] ? initialData.weapons[0].name : equipment[0].name;
+            setCurrent({name:startingWeapon,points:startingWeaponPoints});    
+        }else{
+            const firstModelPoints = parseInt(units[0].points);
+            updateUnit({qty:1, model:{name:units[0].name,points:firstModelPoints}, weapons:[],total:firstModelPoints});    
+            setCurrent({name:equipment[0].name,points:equipment[0].points});    
+        }
     },[factionData]);
+
 
 
     const genModData = (field)=>{

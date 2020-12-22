@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect,useLayoutEffect } from 'react';
 import {useState,useContext} from 'react';
 import styled from 'styled-components';
 import {Button} from 'antd';
@@ -6,6 +6,7 @@ import {PlusOutlined} from "@ant-design/icons";
 import {Context} from "../App"
 import Footer from "./Footer";
 import Unit from "./Unit";
+import { existsSync } from 'fs';
 
 
 const Top = styled.div`
@@ -32,27 +33,28 @@ const AddButton = styled.div`
 
 export default function Main(){
 
-    const [units,setUnits] = useState([{id:0}]);
+    const [units,setUnits] = useState([]);
     const [idCount,setIdCount] = useState(1);
-    const {data,currentFaction,dispatch} = useContext(Context);
-
-    //load this component with the data it last had when closed
-    useEffect(()=>{
-        const existingList = localStorage.getItem("ENLIST_ARMY_LIST"); 
-        if(existingList){
-            existingList.forEach((unit)=>{
-                addItem(unit);
-            });
-        }
-    },[])
-
+    const {data,factionData,dispatch} = useContext(Context);
 
     const addItem = (unit)=>{
         setIdCount(idCount+1);
-        console.log(unit);
         const newItem = {id:idCount,initialData:unit};
         setUnits([...units, newItem]);
     }
+    //load this component with the data it last had when closed
+    useLayoutEffect(()=>{
+        const existingList = JSON.parse(localStorage.getItem("ENLIST_ARMY_LIST")); 
+        if(existingList.army){
+            const init = [];
+            existingList.army.forEach((unit,i)=>{
+                init.push({id:i, initialData:unit});
+            });
+            setUnits(init);
+            setIdCount(existingList.army.length+1);
+        }
+    },[])
+
 
     const genDestroyItem = (id)=>{
         return (unitToRemove)=>{
@@ -65,10 +67,13 @@ export default function Main(){
         //const {dispatch} = Total;
         //dispatch({type:"add", value:1});
 
+    const currentFaction = factionData.currentFaction || factionData.factionList[0];
+
     return (
         <>
             <Top>
                 {data && data[currentFaction] && units.map((unit)=>{
+                    console.log(unit.id);
                     return <Unit key={unit.id} initialData={unit.initialData} selfDestruct={genDestroyItem(unit.id)} factionData={data[currentFaction]}/>
                 })}
             </Top>

@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import {useContext} from 'react';
 import styled from "styled-components";
 import {Context} from "../App";
+import FactionChooser from './FactionChoice'
 
 const Bottom = styled.div`
 
@@ -31,24 +32,27 @@ const AddButton = styled.div`
 
 export default function Footer(props){
   
-    const {army} = useContext(Context);
+    const {army,factionData} = useContext(Context);
 
-    useEffect(()=>{
-        localStorage.setItem("ENLIST_ARMY_LIST", army);
-    },[army])
+    useLayoutEffect(()=>{
+        setTimeout(()=>{
+            const clone = [...army];
+            const dataToSave = {army:clone, faction: factionData.currentFaction};
+            console.log(dataToSave);
+            localStorage.setItem("ENLIST_ARMY_LIST", JSON.stringify(dataToSave));
+        },0);
+    },[army,factionData])
 
-    console.log(army);
 
     const total = army.reduce((acc,unit)=>{
         return acc + unit.total;
     },0);
 
-    
-
    return (
-    <Bottom>
-        {`Total: ${total}pts`}
-        <AddButton onClick={()=>{props.addItem()}}>Add + </AddButton>
-    </Bottom>
+        <Bottom>
+            {`Total: ${total}pts`}
+            <FactionChooser/>
+            <AddButton onClick={()=>{props.addItem()}}>Add + </AddButton>
+        </Bottom>
    ) 
 }

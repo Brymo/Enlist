@@ -56,23 +56,26 @@ const reducer = function(army,action){
 
 function App() {
 
-  const [data,setData] = useState();
+  const [data,setData] = useState({});
   const [army,dispatch] = useReducer(reducer,[]);
   const [factions,setFactions] = useState({currentFaction: "", factionList:[]});
 
+
   useEffect(()=>{
+    const existingList = JSON.parse(localStorage.getItem("ENLIST_ARMY_LIST")); 
+    console.log(existingList);
     fetch('Data.json').then(v=>v.json()).then(data=>{
       setData(data);
       const factionKeys = Object.keys(data); 
-      setFactions({currentFaction:factionKeys[0], factionList:factionKeys});
+      setFactions({currentFaction:existingList.faction || factionKeys[0], factionList:factionKeys, factionSetter:setFactions});
     });
   },[])
-
+  
 
 
   return (
     <>
-      <Context.Provider value={{data,currentFaction:factions.currentFaction,army, dispatch }}>
+      <Context.Provider value={{data,factionData:factions,army, dispatch }}>
         <All>
           <Main/>
         </All>
