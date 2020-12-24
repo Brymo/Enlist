@@ -21,7 +21,7 @@ const Top = styled.div`
     justify-content:flex-start;
     align-items:flex-start;
     flex-wrap:wrap;
-    overflow:scroll;
+    overflow:auto;
     
 `
 

@@ -8,7 +8,7 @@ const Context = React.createContext();
 
 const All = styled.div`
   width:100%;
-  height: 100vh;
+  height: 99.9vh;
   display: grid;
   grid-template-rows: 1fr 5rem;
   grid-template-columns: 1fr;
@@ -64,7 +64,7 @@ function App() {
   useEffect(()=>{
     const existingList = JSON.parse(localStorage.getItem("ENLIST_ARMY_LIST")); 
     console.log(existingList);
-    fetch('Data.json').then(v=>v.json()).then(data=>{
+    fetch('https://raw.githubusercontent.com/Brymo/Enlist/master/public/Data.json').then(v=>v.json()).then(data=>{
       setData(data);
       const factionKeys = Object.keys(data); 
       setFactions({currentFaction:existingList.faction || factionKeys[0], factionList:factionKeys, factionSetter:setFactions});

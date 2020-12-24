@@ -28,6 +28,12 @@ const AddButton = styled.div`
     align-items:center;
     padding-left: 2.5rem;
     cursor: pointer;
+    transition: padding-left 0.2s ease-out;
+
+    &:hover{
+        padding-left: 2.8rem;
+    }
+
 `
 
 export default function Footer(props){
