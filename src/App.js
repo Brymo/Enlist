@@ -65,13 +65,13 @@ function App() {
     const existingList = JSON.parse(localStorage.getItem("ENLIST_ARMY_LIST")); 
     console.log(existingList);
     fetch('https://raw.githubusercontent.com/Brymo/Enlist/master/public/Data.json').then(v=>v.json()).then(data=>{
+      console.log(data);
       setData(data);
       const factionKeys = Object.keys(data); 
       setFactions({currentFaction:existingList.faction || factionKeys[0], factionList:factionKeys, factionSetter:setFactions});
     });
   },[])
   
-
 
   return (
     <>

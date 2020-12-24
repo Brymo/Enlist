@@ -19,6 +19,10 @@ const UnitBox = styled.div`
     justify-content:space-between;
 
     margin:0.5rem;
+
+    @media (max-width: 768px){
+        width:90vw;
+    }
 `;
 
 const Row=  styled.span`

@@ -17,21 +17,42 @@ const Bottom = styled.div`
     padding: 0 2.5rem;
     font-size: 2.5rem;
     font-weight:bold;
+
+    @media (max-width: 768px){
+        justify-content:flex-start;
+        font-size: 1rem;
+    }
+
 ` 
+
+const Spacer = styled.div`
+    margin-left:1rem;
+`
 
 const AddButton = styled.div`
     width: 50vw;
     background-color: #1890ff;
     margin: -2.5rem;
+    padding-left: 2.5rem;
     height:5rem;
     display:flex;
     align-items:center;
-    padding-left: 2.5rem;
     cursor: pointer;
     transition: padding-left 0.2s ease-out;
 
     &:hover{
         padding-left: 2.8rem;
+    }
+
+    @media (max-width: 768px){
+        position:absolute;
+        right:0;
+        padding-left: 0rem;
+        margin: 0rem;
+        width: 20vw;
+        display:flex;
+        justify-content:center;
+        align-items:center;
     }
 
 `
@@ -57,7 +78,7 @@ export default function Footer(props){
    return (
         <Bottom>
             {`Total: ${total}pts`}
-            <FactionChooser/>
+            <Spacer><FactionChooser/></Spacer>
             <AddButton onClick={()=>{props.addItem()}}>Add + </AddButton>
         </Bottom>
    ) 

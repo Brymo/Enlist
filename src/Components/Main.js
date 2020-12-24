@@ -23,6 +23,9 @@ const Top = styled.div`
     flex-wrap:wrap;
     overflow:auto;
     
+    @media (max-width: 768px){
+        padding:1rem;
+    }
 `
 
 const AddButton = styled.div`
