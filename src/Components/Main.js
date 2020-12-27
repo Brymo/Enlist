@@ -5,12 +5,13 @@ import {Button} from 'antd';
 import {PlusOutlined} from "@ant-design/icons";
 import {Context} from "../App"
 import Footer from "./Footer";
+import Header from "./Header";
 import Unit from "./Unit";
 import { existsSync } from 'fs';
 
 
 const Top = styled.div`
-    grid-row: 1/span 1;
+    grid-row: 2/span 1;
     background-color: white;
     width:100%;
     max-height: 100%;
@@ -74,6 +75,7 @@ export default function Main(){
 
     return (
         <>
+            <Header/> 
             <Top>
                 {data && data[currentFaction] && units.map((unit)=>{
                     console.log(unit.id);

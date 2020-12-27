@@ -10,7 +10,7 @@ const All = styled.div`
   width:100%;
   height: 99.9vh;
   display: grid;
-  grid-template-rows: 1fr 5rem;
+  grid-template-rows: 5rem 1fr 5rem;
   grid-template-columns: 1fr;
 `
 

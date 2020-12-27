@@ -6,7 +6,7 @@ import FactionChooser from './FactionChoice'
 
 const Bottom = styled.div`
 
-    grid-row: 2/span 1;
+    grid-row: 3/span 1;
 
     width:100%;
     height: 5rem;
@@ -18,7 +18,7 @@ const Bottom = styled.div`
     font-size: 2.5rem;
     font-weight:bold;
 
-    @media (max-width: 768px){
+    @media (max-width: 950px){
         justify-content:flex-start;
         font-size: 1rem;
     }
@@ -44,7 +44,7 @@ const AddButton = styled.div`
         padding-left: 2.8rem;
     }
 
-    @media (max-width: 768px){
+    @media (max-width: 950px){
         position:absolute;
         right:0;
         padding-left: 0rem;
