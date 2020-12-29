@@ -145,7 +145,7 @@ export default function Footer(props){
         const clone = {...acc};
         clone[unit.model.role] += 1;
         return clone;
-    }, {HQ:0, T:0,E:0,FA:0,HS:0,DT:0,F:0,F:0,LOW:0}) 
+    }, {HQ:0, T:0,E:0,FA:0,HS:0,DT:0,F:0,F:0,LOW:0, DRON:0}) 
 
     const isPatrol = interrogate(roleCount).with(patrolConditions);
     const isSpearhead = interrogate(roleCount).with(spearheadConditions);

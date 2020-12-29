@@ -51,7 +51,9 @@ const roleDictionary = {
     HS:"H.Support",
     F:"Flyer",
     FO: "Fort.",
-    LOW: "L.O.W"
+    LOW: "L.O.W",
+    DRON: "Drone"
+
 }
 
 export default function Unit(props){
