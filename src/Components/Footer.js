@@ -25,6 +25,26 @@ const Bottom = styled.div`
 
 ` 
 
+const Summary = styled.div`
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    font-size: 1.5rem;
+
+    @media (max-width: 950px){
+        font-size: 1rem;
+    }
+`;
+
+const DetachmentType = styled.div`
+    font-size: 1rem;
+
+    @media (max-width: 950px){
+        font-size: 1rem;
+    }
+`;
+
 const Spacer = styled.div`
     margin-left:1rem;
 `
@@ -57,6 +77,57 @@ const AddButton = styled.div`
 
 `
 
+function interrogate(roleCounts){
+    return {
+        with: (conditions)=>{
+            let passes = true;
+            conditions.forEach(condition => {
+                if(!condition(roleCounts)){
+                    passes = false;
+                }
+            });
+            return passes;
+        }
+    }
+}
+
+function createRange(role,min,max){
+    return (roleCounts)=>{
+        return roleCounts[role] >= min && roleCounts[role] <= max;
+    }
+}
+
+const patrolConditions = [
+    createRange("HQ", 1,2),
+    createRange("T", 1,3),
+    createRange("E", 0,2),
+    createRange("FA", 0,2),
+    createRange("HS", 0,2),
+    createRange("F", 0,2),
+    createRange("LOW", 0,1),
+];
+
+const spearheadConditions = [
+    createRange("HQ", 2,3),
+    createRange("T", 3,6),
+    createRange("E", 0,6),
+    createRange("FA", 0,3),
+    createRange("HS", 0,3),
+    createRange("F", 0,2),
+    createRange("LOW", 0,1),
+];
+
+const outriderConditions = [
+    createRange("HQ", 3,5),
+    createRange("T", 6,12),
+    createRange("E", 3,8),
+    createRange("FA", 3,5),
+    createRange("HS", 3,5),
+    createRange("F", 0,2),
+    createRange("LOW", 0,1),
+];
+
+
 export default function Footer(props){
   
     const {army,factionData} = useContext(Context);
@@ -70,14 +141,42 @@ export default function Footer(props){
         },0);
     },[army,factionData])
 
+    const roleCount = army.reduce((acc,unit)=>{
+        const clone = {...acc};
+        clone[unit.model.role] += 1;
+        return clone;
+    }, {HQ:0, T:0,E:0,FA:0,HS:0,DT:0,F:0,F:0,LOW:0}) 
+
+    const isPatrol = interrogate(roleCount).with(patrolConditions);
+    const isSpearhead = interrogate(roleCount).with(spearheadConditions);
+    const isOutrider = interrogate(roleCount).with(outriderConditions);
+
+    const detachmentType = isPatrol ? "Patrol":
+                           isSpearhead ? "Spearhead":
+                           isOutrider ? "Outrider":
+                           "Invalid Detachment";
 
     const total = army.reduce((acc,unit)=>{
         return acc + unit.total;
     },0);
 
+
+    /*HQ
+    * T - Troop
+    * E - Elite
+    * FA - Fast Attack
+    * HS - Heavy Support
+    * F - Flyer
+    * FO - Fortification
+    * DT - Dedicated transport
+    */
+
    return (
         <Bottom>
-            {`Total: ${total}pts`}
+            <Summary>
+                <div>{`Total: ${total}pts`}</div>
+                <DetachmentType>{detachmentType}</DetachmentType>
+            </Summary>
             <Spacer><FactionChooser/></Spacer>
             <AddButton onClick={()=>{props.addItem()}}>Add + </AddButton>
         </Bottom>

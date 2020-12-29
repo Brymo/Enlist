@@ -43,6 +43,17 @@ const CloseRow=  styled.span`
     font-weight:bold;
 `;
 
+const roleDictionary = {
+    HQ:"HQ",
+    T:"Troop",
+    E :"Elite",
+    FA:"Fast Attack",
+    HS:"Heavy Support",
+    F:"Flyer",
+    FO: "Fortification",
+    LOW: "Lord Of War"
+}
+
 export default function Unit(props){
     const {selfDestruct,factionData, initialData} = props;
     const allData = useContext(Context)
@@ -80,7 +91,7 @@ export default function Unit(props){
             setCurrent({name:startingWeapon,points:startingWeaponPoints});    
         }else{
             const firstModelPoints = parseInt(units[0].points);
-            updateUnit({qty:1, model:{name:units[0].name,points:firstModelPoints}, weapons:[],total:firstModelPoints});    
+            updateUnit({qty:1, model:{name:units[0].name,points:firstModelPoints, role:units[0].role}, weapons:[],total:firstModelPoints});    
             setCurrent({name:equipment[0].name,points:equipment[0].points});    
         }
     },[factionData]);
@@ -186,7 +197,7 @@ export default function Unit(props){
                return <Equipment id={weapon.name} equipment={weapon} changeQuantity={changeWeaponQty(weapon.name)} selfDestruct={genRemoveWeapon(weapon.name)}/>
            })}
            <Row>
-                {`${total}pts`}
+                {`${total}pts - ${roleDictionary[unitData.model.role]}`}
                 <Button className="showOnHover" shape="circle" type="danger" icon={<DeleteOutlined/>} size="large" onClick={()=>{selfDestruct(unitData)}}/> 
            </Row>
         </UnitBox>
