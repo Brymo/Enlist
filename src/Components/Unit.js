@@ -47,11 +47,11 @@ const roleDictionary = {
     HQ:"HQ",
     T:"Troop",
     E :"Elite",
-    FA:"Fast Attack",
-    HS:"Heavy Support",
+    FA:"F.Attack",
+    HS:"H.Support",
     F:"Flyer",
-    FO: "Fortification",
-    LOW: "Lord Of War"
+    FO: "Fort.",
+    LOW: "L.O.W"
 }
 
 export default function Unit(props){
