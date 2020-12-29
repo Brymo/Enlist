@@ -47,7 +47,7 @@ export default function Unit(props){
     const {selfDestruct,factionData, initialData} = props;
     const allData = useContext(Context)
     const {dispatch } = allData;
-    const [unitData, setData] = useState({qty:1, model:{name:"",points:0}, weapons:[],total:0});
+    const [unitData, setData] = useState({qty:1, model:{name:"",role:"",points:0}, weapons:[],total:0});
     const [currentEquip,setCurrent] = useState({name:"", points:0});
     //const [unitData, setData] = useState({qty:0, name:data[currentFaction]["UNITS"][0].name, weapons:[]});
 
@@ -97,8 +97,8 @@ export default function Unit(props){
 
     //where model is format name$$points because idk how to do this otherwise
     const changeModel = (model)=>{
-        const [name,pointsTxt] = model.split("$$");
-        const chosenModel = {name,points:parseInt(pointsTxt)}
+        const [name,pointsTxt,role] = model.split("$$");
+        const chosenModel = {name,points:parseInt(pointsTxt),role}
         genModData("model")(chosenModel);
     }
 
@@ -157,14 +157,16 @@ export default function Unit(props){
         }
     }
 
+    console.log(units);
+
     return (
         <div className="unitCard">
         <UnitBox>
            <CloseRow>
                <Select value={unitData.model.name} style={{width:"50%"}} onChange={changeModel} showSearch>
                    {units.map((unit)=>{
-                       return (<Option key={unit.name} value={`${unit.name}$$${unit.points}`} >
-                        {`${unit.name} - ${unit.points}`}
+                       return (<Option key={unit.name} value={`${unit.name}$$${unit.points}$$${unit.role}`} >
+                        {`[${unit.role}] ${unit.name} - ${unit.points}`}
                        </Option>)
                    })}
                </Select>
