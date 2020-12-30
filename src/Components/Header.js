@@ -86,6 +86,7 @@ export default function Footer(props) {
   return (
     <Top>
       <PageTitle>40K Enlist</PageTitle>
+      <span style={{fontSize:"1rem", marginRight:"0.5rem"}}>Point Limit: </span>
       <PointCap>
         <Input placeholder="Point Limit" value={pointLimit} onChange={changeCap}/>
       </PointCap>

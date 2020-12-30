@@ -159,6 +159,8 @@ export default function Footer(props){
     const isOverTheLimit = !!pointLimit && total > pointLimit;
     const totalStyle = isOverTheLimit ? {color:"red"} : {};
 
+    const detachmentStyle = detachmentType === "Invalid Detachment" ? {color:"red"} : {};
+
     /*HQ
     * T - Troop
     * E - Elite
@@ -173,7 +175,7 @@ export default function Footer(props){
         <Bottom>
             <Summary>
                 <div style={totalStyle}>{`Total: ${total}pts`}</div>
-                <DetachmentType>{detachmentType}</DetachmentType>
+                <DetachmentType style={detachmentStyle}>{detachmentType}</DetachmentType>
             </Summary>
             <Spacer><FactionChooser/></Spacer>
             <AddButton onClick={()=>{props.addItem()}}>Add + </AddButton>
