@@ -130,16 +130,16 @@ const outriderConditions = [
 
 export default function Footer(props){
   
-    const {army,factionData} = useContext(Context);
+    const {army,factionData,total,limiter} = useContext(Context);
+    const {value:pointLimit} = limiter
 
     useLayoutEffect(()=>{
         setTimeout(()=>{
             const clone = [...army];
-            const dataToSave = {army:clone, faction: factionData.currentFaction};
-            console.log(dataToSave);
+            const dataToSave = {army:clone, faction: factionData.currentFaction, pointLimit};
             localStorage.setItem("ENLIST_ARMY_LIST", JSON.stringify(dataToSave));
         },0);
-    },[army,factionData])
+    },[army,factionData,pointLimit])
 
     const roleCount = army.reduce((acc,unit)=>{
         const clone = {...acc};
@@ -155,10 +155,6 @@ export default function Footer(props){
                            isSpearhead ? "Spearhead":
                            isOutrider ? "Outrider":
                            "Invalid Detachment";
-
-    const total = army.reduce((acc,unit)=>{
-        return acc + unit.total;
-    },0);
 
 
     /*HQ

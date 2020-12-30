@@ -34,6 +34,13 @@ const Row=  styled.span`
     font-weight:bold;
 `;
 
+const QuantityCap=  styled.span`
+    margin-left:1rem;
+    font-size: 1rem;
+    color:lightgrey;
+    text-decoration:underline;
+`;
+
 const CloseRow=  styled.span`
     display:flex;
     justify-content:flex-start;
@@ -58,8 +65,10 @@ const roleDictionary = {
 
 export default function Unit(props){
     const {selfDestruct,factionData, initialData} = props;
-    const allData = useContext(Context)
-    const {dispatch } = allData;
+
+    const {dispatch,total:armyTotal, limiter} = useContext(Context)
+    const {value:pointLimit} = limiter;
+
     const [unitData, setData] = useState({qty:1, model:{name:"",role:"",points:0}, weapons:[],total:0});
     const [currentEquip,setCurrent] = useState({name:"", points:0});
     //const [unitData, setData] = useState({qty:0, name:data[currentFaction]["UNITS"][0].name, weapons:[]});
@@ -170,7 +179,6 @@ export default function Unit(props){
         }
     }
 
-    console.log(units);
 
     return (
         <div className="unitCard">
@@ -178,17 +186,26 @@ export default function Unit(props){
            <CloseRow>
                <Select value={unitData.model.name} style={{width:"50%"}} onChange={changeModel} showSearch>
                    {units.map((unit)=>{
-                       return (<Option key={unit.name} value={`${unit.name}$$${unit.points}$$${unit.role}`} >
+
+                       const breaksPointLimit = !!armyTotal && armyTotal + parseInt(unit.points) > pointLimit;
+                       const optionStyle = breaksPointLimit ? {color:"red"} : {};
+
+                       return (<Option key={unit.name} style={optionStyle} value={`${unit.name}$$${unit.points}$$${unit.role}`} >
                         {`[${unit.role}] ${unit.name} - ${unit.points}`}
                        </Option>)
                    })}
                </Select>
                <InputNumber  value={unitData.qty} min={0} step={1} onChange={genModData("qty")}/>
+               {!!pointLimit && <QuantityCap className="showOnHover" >{`Max. ${Math.floor((pointLimit - armyTotal)/total)}`}</QuantityCap>}
            </CloseRow> 
            <CloseRow>
                <Select value={currentEquip.name} style={{width:"50%"}} onChange={changeCurrentEquip} showSearch>
                    {equipment.map((e)=>{
-                       return (<Option key={e.name} value={`${e.name}$$${e.points}`} >
+
+                       const breaksPointLimit = !!armyTotal && armyTotal + parseInt(e.points) > pointLimit;
+                       const optionStyle = breaksPointLimit ? {color:"red"} : {};
+
+                       return (<Option style={optionStyle} key={e.name} value={`${e.name}$$${e.points}`} >
                         {`${e.name} - ${e.points}`}
                        </Option>)
                    })}

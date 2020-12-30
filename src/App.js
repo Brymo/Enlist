@@ -59,23 +59,25 @@ function App() {
   const [data,setData] = useState({});
   const [army,dispatch] = useReducer(reducer,[]);
   const [factions,setFactions] = useState({currentFaction: "", factionList:[]});
-
+  const [pointCap, setCap] = useState(null);
 
   useEffect(()=>{
     const existingList = JSON.parse(localStorage.getItem("ENLIST_ARMY_LIST")); 
-    console.log(existingList);
     fetch('https://raw.githubusercontent.com/Brymo/Enlist/master/public/Data.json').then(v=>v.json()).then(data=>{
-      console.log(data);
       setData(data);
       const factionKeys = Object.keys(data); 
       setFactions({currentFaction:existingList.faction || factionKeys[0], factionList:factionKeys, factionSetter:setFactions});
+      setCap(existingList.pointLimit);
     });
   },[])
   
+  const total = army.reduce((acc,unit)=>{
+      return acc + unit.total;
+  },0);
 
   return (
     <>
-      <Context.Provider value={{data,factionData:factions,army, dispatch }}>
+      <Context.Provider value={{data,factionData:factions,army,limiter:{value:pointCap, setter:setCap},total,dispatch }}>
         <All>
           <Main/>
         </All>

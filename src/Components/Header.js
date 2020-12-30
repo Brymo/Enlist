@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Button,Tooltip,Drawer } from "antd";
+import { Button,Tooltip,Drawer,Input } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import { useContext } from "react";
 import styled from "styled-components";
@@ -30,8 +30,16 @@ const PageTitle = styled.div`
 
 `
 
+const PointCap = styled.div`
+  width: 20vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 2rem;
+`
 export default function Footer(props) {
-  const { army } = useContext(Context);
+  const { army,limiter } = useContext(Context);
+  const {value:pointLimit, setter:setLimit} = limiter;
   const [isOpen, setOpen] = useState(false);
 
   function openList() {
@@ -61,9 +69,26 @@ export default function Footer(props) {
     );
   });
 
+  const changeCap = useCallback((e)=>{
+    const typedLimit = e.currentTarget.value;
+
+    const checkIfNumber = (value)=>{
+      const numberRegex = /^[0-9]+$/g;
+      return numberRegex.test(value);
+    }
+
+    if(checkIfNumber(typedLimit)){
+      setLimit(typedLimit);
+    }
+
+  },[setLimit])
+
   return (
     <Top>
       <PageTitle>40K Enlist</PageTitle>
+      <PointCap>
+        <Input placeholder="Point Limit" value={pointLimit} onChange={changeCap}/>
+      </PointCap>
       <Tooltip placement="bottom" title="List View">
         <Button icon={<EyeOutlined />} shape="circle" onClick={openList} />
       </Tooltip>
