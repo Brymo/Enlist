@@ -156,6 +156,8 @@ export default function Footer(props){
                            isOutrider ? "Outrider":
                            "Invalid Detachment";
 
+    const isOverTheLimit = !!pointLimit && total > pointLimit;
+    const totalStyle = isOverTheLimit ? {color:"red"} : {};
 
     /*HQ
     * T - Troop
@@ -170,7 +172,7 @@ export default function Footer(props){
    return (
         <Bottom>
             <Summary>
-                <div>{`Total: ${total}pts`}</div>
+                <div style={totalStyle}>{`Total: ${total}pts`}</div>
                 <DetachmentType>{detachmentType}</DetachmentType>
             </Summary>
             <Spacer><FactionChooser/></Spacer>
