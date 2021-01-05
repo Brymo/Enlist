@@ -44,12 +44,12 @@ export default function Main(){
     const addItem = (unit)=>{
         setIdCount(idCount+1);
         const newItem = {id:idCount,initialData:unit};
-        setUnits([...units, newItem]);
+        setUnits([newItem].concat([...units]));
     }
     //load this component with the data it last had when closed
     useLayoutEffect(()=>{
         const existingList = JSON.parse(localStorage.getItem("ENLIST_ARMY_LIST")); 
-        if(existingList.army){
+        if(existingList && existingList.army){
             const init = [];
             existingList.army.forEach((unit,i)=>{
                 init.push({id:i, initialData:unit});
@@ -59,6 +59,22 @@ export default function Main(){
         }
     },[])
 
+    /*const sortUnitsByrole = ()=>{
+        const clone = [...units]
+        const allRoles = {};
+        clone.forEach((unit)=>{
+            console.log(unit);
+            const role = unit.model.role;
+            if(!( role in allRoles)){
+                allRoles[role] = [];
+            }
+            allRoles[role].push(unit);
+        })
+
+        console.log(Object.values(allRoles).flat());
+    };
+
+    sortUnitsByrole(units);*/
 
     const genDestroyItem = (id)=>{
         return (unitToRemove)=>{

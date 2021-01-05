@@ -73,6 +73,7 @@ export default function Unit(props){
     const [currentEquip,setCurrent] = useState({name:"", points:0});
     //const [unitData, setData] = useState({qty:0, name:data[currentFaction]["UNITS"][0].name, weapons:[]});
 
+    console.log(factionData);
     const units = useMemo(()=>factionData["UNITS"].concat(factionData["NAMED CHARS"] || []),[factionData])
     const equipment = useMemo(()=>factionData["RANGED WEAPONS"].concat(factionData["MELEE WEAPONS"]).concat(factionData["OTHER WARGEAR"]),[factionData])
 
