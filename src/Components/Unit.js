@@ -30,7 +30,7 @@ const Row=  styled.span`
     justify-content:space-between;
     align-items:center;
     width:100%;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight:bold;
 `;
 
@@ -67,13 +67,12 @@ export default function Unit(props){
     const {selfDestruct,factionData, initialData} = props;
 
     const {dispatch,total:armyTotal, limiter} = useContext(Context)
-    const {value:pointLimit} = limiter;
+    const  pointLimit = limiter.value;
 
     const [unitData, setData] = useState({qty:1, model:{name:"",role:"",points:0}, weapons:[],total:0});
     const [currentEquip,setCurrent] = useState({name:"", points:0});
     //const [unitData, setData] = useState({qty:0, name:data[currentFaction]["UNITS"][0].name, weapons:[]});
 
-    console.log(factionData);
     const units = useMemo(()=>factionData["UNITS"].concat(factionData["NAMED CHARS"] || []),[factionData])
     const equipment = useMemo(()=>factionData["RANGED WEAPONS"].concat(factionData["MELEE WEAPONS"]).concat(factionData["OTHER WARGEAR"]),[factionData])
 
@@ -86,7 +85,7 @@ export default function Unit(props){
         setData(newUnit);
     }
 
-    const total = (weaponPoints + unitData.model.points)*unitData.qty;
+    const total = unitData.model.points * unitData.qty + weaponPoints;
 
     useEffect(()=>{
         const clone = {...unitData};
@@ -99,7 +98,7 @@ export default function Unit(props){
         if(initialData){
             updateUnit(initialData)
             const startingWeapon = initialData.weapons[0] ? initialData.weapons[0].name : equipment[0].name;
-            const startingWeaponPoints = initialData.weapons[0] ? initialData.weapons[0].name : equipment[0].name;
+            const startingWeaponPoints = initialData.weapons[0] ? initialData.weapons[0].points : equipment[0].points;
             setCurrent({name:startingWeapon,points:startingWeaponPoints});    
         }else{
             const firstModelPoints = parseInt(units[0].points);
@@ -188,7 +187,7 @@ export default function Unit(props){
                <Select value={unitData.model.name} style={{width:"50%"}} onChange={changeModel} showSearch>
                    {units.map((unit)=>{
 
-                       const breaksPointLimit = !!armyTotal && armyTotal + parseInt(unit.points) > pointLimit;
+                       const breaksPointLimit = !!armyTotal && armyTotal + parseInt(unit.points) > (pointLimit || Number.MAX_VALUE);
                        const optionStyle = breaksPointLimit ? {color:"red"} : {};
 
                        return (<Option key={unit.name} style={optionStyle} value={`${unit.name}$$${unit.points}$$${unit.role}`} >
@@ -203,7 +202,7 @@ export default function Unit(props){
                <Select value={currentEquip.name} style={{width:"50%"}} onChange={changeCurrentEquip} showSearch>
                    {equipment.map((e)=>{
 
-                       const breaksPointLimit = !!armyTotal && armyTotal + parseInt(e.points) > pointLimit;
+                       const breaksPointLimit = !!armyTotal && armyTotal + parseInt(e.points) > (pointLimit || Number.MAX_VALUE);
                        const optionStyle = breaksPointLimit ? {color:"red"} : {};
 
                        return (<Option style={optionStyle} key={e.name} value={`${e.name}$$${e.points}`} >

@@ -11,3 +11,12 @@
     opacity: 1;
 }
 
+@keyframes unitCardFade{
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+.unitCard{
+    animation-name: unitCardFade;
+    animation-duration: 1s;
+}

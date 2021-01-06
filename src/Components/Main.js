@@ -39,7 +39,7 @@ export default function Main(){
 
     const [units,setUnits] = useState([]);
     const [idCount,setIdCount] = useState(1);
-    const {data,factionData,dispatch} = useContext(Context);
+    const {army,data,factionData,dispatch} = useContext(Context);
 
     const addItem = (unit)=>{
         setIdCount(idCount+1);
@@ -60,7 +60,7 @@ export default function Main(){
     },[])
 
     /*const sortUnitsByrole = ()=>{
-        const clone = [...units]
+        const clone = [...army]
         const allRoles = {};
         clone.forEach((unit)=>{
             console.log(unit);
@@ -72,9 +72,8 @@ export default function Main(){
         })
 
         console.log(Object.values(allRoles).flat());
-    };
+    };*/
 
-    sortUnitsByrole(units);*/
 
     const genDestroyItem = (id)=>{
         return (unitToRemove)=>{
@@ -94,7 +93,6 @@ export default function Main(){
             <Header/> 
             <Top>
                 {data && data[currentFaction] && units.map((unit)=>{
-                    console.log(unit.id);
                     return <Unit key={unit.id} initialData={unit.initialData} selfDestruct={genDestroyItem(unit.id)} factionData={data[currentFaction]}/>
                 })}
             </Top>
